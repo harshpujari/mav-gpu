@@ -39,13 +39,13 @@ A minimal GPU in Verilog, built from scratch to learn how GPUs work.
 |              |                                                    |
 |              v                                                    |
 |  +------------------------+                                       |
-|  |   Memory Controllers   |                                       |
-|  |  (Program)    (Data)   |                                       |
+|  |        Cache           |                                       |
 |  +------------------------+                                       |
 |              |                                                    |
 |              v                                                    |
 |  +------------------------+                                       |
-|  |        Cache           |                                       |
+|  |   Memory Controllers   |                                       |
+|  |  (Program)    (Data)   |                                       |
 |  +------------------------+                                       |
 +------------------------------------------------------------------+
                |
@@ -54,7 +54,7 @@ A minimal GPU in Verilog, built from scratch to learn how GPUs work.
 |                       External Memory                             |
 |  +-------------------------+  +-------------------------+         |
 |  | Program Memory          |  | Data Memory             |         |
-|  | (8-bit addr, 16-bit data)|  | (8-bit addr, 8-bit data)|         |
+|  | (8-bit addr, 16-bit data)|  | (8-bit addr, 8-bit data)|        |
 |  +-------------------------+  +-------------------------+         |
 +------------------------------------------------------------------+
 ```
