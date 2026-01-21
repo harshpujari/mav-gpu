@@ -70,6 +70,7 @@ FETCH --> DECODE --> REQUEST --> WAIT --> EXECUTE --> UPDATE
 ## ISA (11 Instructions)
 
 ```
+NOP    - Do nothing, will be used to wait for something (memory, other threads)
 BRnzp  - Branch if condition matches
 CMP    - Compare two registers
 ADD    - Add
