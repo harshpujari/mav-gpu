@@ -26,7 +26,7 @@ module registers #(
 
     // Control signals from decoder
     input reg decoded_reg_write_enable,              // 1-bit: should we write to rd?
-    input reg [1:0] decoded_reg_input_mux,           // 2-bit: where does the write data come from?
+    input reg [1:0] decoded_reg_input_selector,      // 2-bit: where does the write data come from?
     input reg [DATA_BITS-1:0] decoded_immediate,     // 8-bit: immediate/constant value from instruction
 
     // Data inputs from other units
@@ -80,7 +80,7 @@ module registers #(
             if (core_state == UPDATE) begin
                 // Only general-purpose registers (R0-R12) are writable
                 if (decoded_reg_write_enable && decoded_rd_address < 13) begin
-                    case (decoded_reg_input_mux)
+                    case (decoded_reg_input_selector)
                         ARITHMETIC: registers[decoded_rd_address] <= alu_out;
                         MEMORY:     registers[decoded_rd_address] <= lsu_out;
                         CONSTANT:   registers[decoded_rd_address] <= decoded_immediate;
