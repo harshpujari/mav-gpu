@@ -9,8 +9,8 @@ module decoder (
     input wire clock,                                   // Clock signal - heartbeat of the circuit
     input wire reset,                                   // Reset all outputs to 0
 
-    input reg [2:0] core_state,                         // 3-bit state: which pipeline stage is active?
-    input reg [15:0] instruction,                       // 16-bit instruction word fetched from program memory
+    input wire [2:0] core_state,                         // 3-bit state: which pipeline stage is active?
+    input wire [15:0] instruction,                       // 16-bit instruction word fetched from program memory
 
     // Instruction Fields (extracted bit slices)
     output reg [3:0] decoded_rd_address,                // 4-bit: destination register address (bits [11:8])
