@@ -14,24 +14,24 @@ module registers #(
     input wire enable,                               // Is this thread active? (inactive if block has fewer threads)
 
     // Kernel execution context
-    input reg [7:0] block_id,                        // Current block being executed
+    input wire [7:0] block_id,                        // Current block being executed
 
     // Core pipeline state
-    input reg [2:0] core_state,                      // 3-bit state: which stage is the core in?
+    input wire [2:0] core_state,                      // 3-bit state: which stage is the core in?
 
     // Decoded instruction signals
-    input reg [3:0] decoded_rd_address,              // 4-bit: destination register address (R0-R15)
-    input reg [3:0] decoded_rs_address,              // 4-bit: source register 1 address
-    input reg [3:0] decoded_rt_address,              // 4-bit: source register 2 address
+    input wire [3:0] decoded_rd_address,              // 4-bit: destination register address (R0-R15)
+    input wire [3:0] decoded_rs_address,              // 4-bit: source register 1 address
+    input wire [3:0] decoded_rt_address,              // 4-bit: source register 2 address
 
     // Control signals from decoder
-    input reg decoded_reg_write_enable,              // 1-bit: should we write to rd?
-    input reg [1:0] decoded_reg_input_selector,      // 2-bit: where does the write data come from?
-    input reg [DATA_BITS-1:0] decoded_immediate,     // 8-bit: immediate/constant value from instruction
+    input wire decoded_reg_write_enable,              // 1-bit: should we write to rd?
+    input wire [1:0] decoded_reg_input_selector,      // 2-bit: where does the write data come from?
+    input wire [DATA_BITS-1:0] decoded_immediate,     // 8-bit: immediate/constant value from instruction
 
     // Data inputs from other units
-    input reg [DATA_BITS-1:0] alu_out,               // 8-bit: result from ALU (arithmetic/comparison)
-    input reg [DATA_BITS-1:0] lsu_out,               // 8-bit: result from LSU (memory load)
+    input wire [DATA_BITS-1:0] alu_out,               // 8-bit: result from ALU (arithmetic/comparison)
+    input wire [DATA_BITS-1:0] lsu_out,               // 8-bit: result from LSU (memory load)
 
     // Register outputs for operands
     output reg [7:0] rs,                             // 8-bit: value of source register 1

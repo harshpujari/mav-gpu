@@ -140,19 +140,19 @@ input reg [3:0] decoded_rt_address,
 
 ```systemverilog
 input reg decoded_reg_write_enable,
-input reg [1:0] decoded_reg_input_mux,
+input reg [1:0] decoded_reg_input_selector,
 input reg [DATA_BITS-1:0] decoded_immediate,
 ```
 
 | Signal | Width | Purpose |
 |--------|-------|---------|
 | `decoded_reg_write_enable` | 1-bit | Should we write to `rd`? |
-| `decoded_reg_input_mux` | 2-bit | Where does write data come from? |
+| `decoded_reg_input_selector` | 2-bit | Where does write data come from? |
 | `decoded_immediate` | 8-bit | Constant value from instruction |
 
 **Write source selection:**
 
-| `decoded_reg_input_mux` | Source | Example Instruction |
+| `decoded_reg_input_selector` | Source | Example Instruction |
 |-------------------------|--------|---------------------|
 | `00` (ARITHMETIC) | ALU result | `ADD R1, R2, R3` |
 | `01` (MEMORY) | LSU result | `LDR R1, R2` |
@@ -345,7 +345,7 @@ end else if (enable) begin
 
     if (core_state == UPDATE) begin
         if (decoded_reg_write_enable && decoded_rd_address < 13) begin
-            case (decoded_reg_input_mux)
+            case (decoded_reg_input_selector)
                 ARITHMETIC: registers[decoded_rd_address] <= alu_out;
                 MEMORY:     registers[decoded_rd_address] <= lsu_out;
                 CONSTANT:   registers[decoded_rd_address] <= decoded_immediate;
@@ -391,7 +391,7 @@ if (core_state == UPDATE) begin
 
 **The case statement selects the write source:**
 ```systemverilog
-case (decoded_reg_input_mux)
+case (decoded_reg_input_selector)
     ARITHMETIC: registers[decoded_rd_address] <= alu_out;
     MEMORY:     registers[decoded_rd_address] <= lsu_out;
     CONSTANT:   registers[decoded_rd_address] <= decoded_immediate;
