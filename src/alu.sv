@@ -5,11 +5,11 @@ module alu(
     input wire clock,                              // Clock signal - heartbeat of the circuit
     input wire reset,                            // Reset everything to 0
     input wire enable,                           // Is this ALU active? (some threads may be inactive)
-    input reg [2:0] core_state,                  // 3-bit state: which stage is the core in?
-    input reg [1:0] decoded_alu_arithmetic_selector,  // 2-bit: which operation? (ADD/SUB/MUL/DIV)
-    input reg decoded_alu_output_selector,            // 1-bit: arithmetic or comparison?
-    input reg [7:0] rs,                          // 8-bit: first operand (source register 1)
-    input reg [7:0] rt,                          // 8-bit: second operand (source register 2)
+    input wire [2:0] core_state,                  // 3-bit state: which stage is the core in?
+    input wire [1:0] decoded_alu_arithmetic_selector,  // 2-bit: which operation? (ADD/SUB/MUL/DIV)
+    input wire decoded_alu_output_selector,            // 1-bit: arithmetic or comparison?
+    input wire [7:0] rs,                          // 8-bit: first operand (source register 1)
+    input wire [7:0] rt,                          // 8-bit: second operand (source register 2)
     output wire [7:0] alu_out                    
 );
 
@@ -21,6 +21,9 @@ localparam ADD = 2'b00,      // 00 in binary = ADD
     // Internal register to hold ALU output
     reg [7:0] alu_out_reg;
     assign alu_out = alu_out_reg;
+
+    // 16-bit product to detect MUL overflow before truncating to 8 bits
+    wire [15:0] mul_wide = {8'b0, rs} * {8'b0, rt};
 
     // EXECUTE stage state (from core_state)
     localparam EXECUTE = 3'b101;
@@ -43,8 +46,9 @@ localparam ADD = 2'b00,      // 00 in binary = ADD
                     case (decoded_alu_arithmetic_selector)
                         ADD: alu_out_reg <= rs + rt;
                         SUB: alu_out_reg <= rs - rt;
-                        MUL: alu_out_reg <= rs * rt;
+                        MUL: alu_out_reg <= mul_wide[15:8] ? 8'hFF : mul_wide[7:0];  // saturate at 255 on overflow
                         DIV: alu_out_reg <= rs / rt;
+                        default: alu_out_reg <= 8'bx;
                     endcase
                 end
             end
