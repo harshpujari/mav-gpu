@@ -64,8 +64,40 @@ module fetcher #(
             fetcher_done     <= 1'b0;
             instruction      <= {PROGRAM_MEM_DATA_BITS{1'b0}};
         end else begin
-            // TODO (next increment): FETCH-stage request -> ready handshake ->
-            // latch instruction -> raise fetcher_done; clear on leaving FETCH.
+            case (fetcher_state)
+                FETCHER_IDLE: begin
+                    // Wait until the core enters the FETCH stage, then fire a
+                    // read request for the instruction at the current PC.
+                    if (core_state == FETCH) begin
+                        fetcher_state    <= FETCHER_FETCHING;
+                        mem_read_valid   <= 1'b1;
+                        mem_read_address <= current_pc;
+                    end
+                end
+
+                FETCHER_FETCHING: begin
+                    // Request is in flight - wait for the controller to answer.
+                    if (mem_read_ready) begin
+                        fetcher_state  <= FETCHER_DONE;
+                        mem_read_valid <= 1'b0;             // drop the request
+                        instruction    <= mem_read_data;    // latch the result
+                        fetcher_done   <= 1'b1;             // tell the scheduler
+                    end
+                end
+
+                FETCHER_DONE: begin
+                    // Hold the instruction + done flag until the scheduler moves
+                    // the core out of FETCH (into DECODE), then arm for next time.
+                    if (core_state != FETCH) begin
+                        fetcher_state <= FETCHER_IDLE;
+                        fetcher_done  <= 1'b0;
+                    end
+                end
+
+                default: begin
+                    fetcher_state <= FETCHER_IDLE;
+                end
+            endcase
         end
     end
 
