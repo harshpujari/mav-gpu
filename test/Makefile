@@ -14,6 +14,8 @@ REGISTERS_SRC = $(SRC_DIR)/registers.sv
 REGISTERS_TB  = $(TEST_DIR)/registers_tb.sv
 PC_SRC        = $(SRC_DIR)/pc.sv
 PC_TB         = $(TEST_DIR)/pc_tb.sv
+FETCHER_SRC   = $(SRC_DIR)/fetcher.sv
+FETCHER_TB    = $(TEST_DIR)/fetcher_tb.sv
 
 # Output files
 ALU_OUT       = alu_tb.vvp
@@ -24,6 +26,8 @@ REGISTERS_OUT = registers_tb.vvp
 REGISTERS_VCD = registers_tb.vcd
 PC_OUT        = pc_tb.vvp
 PC_VCD        = pc_tb.vcd
+FETCHER_OUT   = fetcher_tb.vvp
+FETCHER_VCD   = fetcher_tb.vcd
 
 # Compiler flags
 IVERILOG = iverilog
@@ -31,7 +35,7 @@ IVFLAGS  = -g2012 -Wall
 VVP      = vvp
 
 # Default target - run all testbenches
-all: alu decoder registers pc
+all: alu decoder registers pc fetcher
 
 # Compile and run ALU testbench
 alu: $(ALU_OUT)
@@ -61,6 +65,13 @@ pc: $(PC_OUT)
 $(PC_OUT): $(PC_SRC) $(PC_TB)
 	$(IVERILOG) $(IVFLAGS) -o $(PC_OUT) $(PC_TB) $(PC_SRC)
 
+# Compile and run fetcher testbench
+fetcher: $(FETCHER_OUT)
+	$(VVP) $(FETCHER_OUT)
+
+$(FETCHER_OUT): $(FETCHER_SRC) $(FETCHER_TB)
+	$(IVERILOG) $(IVFLAGS) -o $(FETCHER_OUT) $(FETCHER_TB) $(FETCHER_SRC)
+
 # View waveforms (requires GTKWave)
 waves-alu: $(ALU_VCD)
 	gtkwave $(ALU_VCD) &
@@ -74,6 +85,9 @@ waves-registers: $(REGISTERS_VCD)
 waves-pc: $(PC_VCD)
 	gtkwave $(PC_VCD) &
 
+waves-fetcher: $(FETCHER_VCD)
+	gtkwave $(FETCHER_VCD) &
+
 # Clean build artifacts
 clean:
 	rm -f *.vvp *.vcd
@@ -86,11 +100,13 @@ help:
 	@echo "  decoder         - Compile and run decoder testbench"
 	@echo "  registers       - Compile and run register file testbench"
 	@echo "  pc              - Compile and run program counter testbench"
+	@echo "  fetcher         - Compile and run fetcher testbench"
 	@echo "  waves-alu       - Open ALU waveform viewer (requires GTKWave)"
 	@echo "  waves-decoder   - Open decoder waveform viewer (requires GTKWave)"
 	@echo "  waves-registers - Open register file waveform viewer (requires GTKWave)"
 	@echo "  waves-pc        - Open program counter waveform viewer (requires GTKWave)"
+	@echo "  waves-fetcher   - Open fetcher waveform viewer (requires GTKWave)"
 	@echo "  clean           - Remove build artifacts"
 	@echo "  help            - Show this help message"
 
-.PHONY: all alu decoder registers pc waves-alu waves-decoder waves-registers waves-pc clean help
+.PHONY: all alu decoder registers pc fetcher waves-alu waves-decoder waves-registers waves-pc waves-fetcher clean help
