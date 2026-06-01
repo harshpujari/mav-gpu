@@ -41,7 +41,10 @@ module lsu (
     input  wire       mem_write_ready,
 
     // Result handed back to the register file (LDR)
-    output reg [7:0]  lsu_out
+    output reg [7:0]  lsu_out,
+
+    // Exposed so the scheduler can stall in WAIT until memory traffic settles
+    output reg [1:0]  lsu_state
 );
 
     // Core pipeline stages we care about (canonical encoding)
@@ -53,7 +56,6 @@ module lsu (
                LSU_REQUESTING = 2'b01,   // Drive the request onto the bus
                LSU_WAITING    = 2'b10,   // Request issued, waiting for ready
                LSU_DONE       = 2'b11;   // Transaction complete, holding result
-    reg [1:0] lsu_state;
 
     always @(posedge clock) begin
         if (reset) begin
