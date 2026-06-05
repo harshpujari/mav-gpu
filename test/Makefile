@@ -20,6 +20,8 @@ LSU_SRC       = $(SRC_DIR)/lsu.sv
 LSU_TB        = $(TEST_DIR)/lsu_tb.sv
 SCHEDULER_SRC = $(SRC_DIR)/scheduler.sv
 SCHEDULER_TB  = $(TEST_DIR)/scheduler_tb.sv
+CORE_SRC      = $(SRC_DIR)/core.sv $(SRC_DIR)/scheduler.sv $(SRC_DIR)/fetcher.sv $(SRC_DIR)/decoder.sv $(SRC_DIR)/alu.sv $(SRC_DIR)/lsu.sv $(SRC_DIR)/registers.sv $(SRC_DIR)/pc.sv
+CORE_TB       = $(TEST_DIR)/core_tb.sv
 
 # Output files
 ALU_OUT       = alu_tb.vvp
@@ -36,6 +38,8 @@ LSU_OUT       = lsu_tb.vvp
 LSU_VCD       = lsu_tb.vcd
 SCHEDULER_OUT = scheduler_tb.vvp
 SCHEDULER_VCD = scheduler_tb.vcd
+CORE_OUT      = core_tb.vvp
+CORE_VCD      = core_tb.vcd
 
 # Compiler flags
 IVERILOG = iverilog
@@ -43,7 +47,7 @@ IVFLAGS  = -g2012 -Wall
 VVP      = vvp
 
 # Default target - run all testbenches
-all: alu decoder registers pc fetcher lsu scheduler
+all: alu decoder registers pc fetcher lsu scheduler core
 
 # Compile and run ALU testbench
 alu: $(ALU_OUT)
@@ -94,6 +98,13 @@ scheduler: $(SCHEDULER_OUT)
 $(SCHEDULER_OUT): $(SCHEDULER_SRC) $(SCHEDULER_TB)
 	$(IVERILOG) $(IVFLAGS) -o $(SCHEDULER_OUT) $(SCHEDULER_TB) $(SCHEDULER_SRC)
 
+# Compile and run core integration testbench (instantiates all submodules)
+core: $(CORE_OUT)
+	$(VVP) $(CORE_OUT)
+
+$(CORE_OUT): $(CORE_SRC) $(CORE_TB)
+	$(IVERILOG) $(IVFLAGS) -o $(CORE_OUT) $(CORE_TB) $(CORE_SRC)
+
 # View waveforms (requires GTKWave)
 waves-alu: $(ALU_VCD)
 	gtkwave $(ALU_VCD) &
@@ -116,6 +127,9 @@ waves-lsu: $(LSU_VCD)
 waves-scheduler: $(SCHEDULER_VCD)
 	gtkwave $(SCHEDULER_VCD) &
 
+waves-core: $(CORE_VCD)
+	gtkwave $(CORE_VCD) &
+
 # Clean build artifacts
 clean:
 	rm -f *.vvp *.vcd
@@ -131,6 +145,7 @@ help:
 	@echo "  fetcher         - Compile and run fetcher testbench"
 	@echo "  lsu             - Compile and run LSU testbench"
 	@echo "  scheduler       - Compile and run scheduler testbench"
+	@echo "  core            - Compile and run core integration testbench"
 	@echo "  waves-alu       - Open ALU waveform viewer (requires GTKWave)"
 	@echo "  waves-decoder   - Open decoder waveform viewer (requires GTKWave)"
 	@echo "  waves-registers - Open register file waveform viewer (requires GTKWave)"
@@ -138,7 +153,8 @@ help:
 	@echo "  waves-fetcher   - Open fetcher waveform viewer (requires GTKWave)"
 	@echo "  waves-lsu       - Open LSU waveform viewer (requires GTKWave)"
 	@echo "  waves-scheduler - Open scheduler waveform viewer (requires GTKWave)"
+	@echo "  waves-core      - Open core waveform viewer (requires GTKWave)"
 	@echo "  clean           - Remove build artifacts"
 	@echo "  help            - Show this help message"
 
-.PHONY: all alu decoder registers pc fetcher lsu scheduler waves-alu waves-decoder waves-registers waves-pc waves-fetcher waves-lsu waves-scheduler clean help
+.PHONY: all alu decoder registers pc fetcher lsu scheduler core waves-alu waves-decoder waves-registers waves-pc waves-fetcher waves-lsu waves-scheduler waves-core clean help
