@@ -1,0 +1,584 @@
+$date
+	Sat Jun  6 10:48:15 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module controller_tb $end
+$var wire 1 ! mem_write_valid $end
+$var wire 8 " mem_write_data [7:0] $end
+$var wire 8 # mem_write_address [7:0] $end
+$var wire 1 $ mem_read_valid $end
+$var wire 8 % mem_read_address [7:0] $end
+$var wire 4 & consumer_write_ready [3:0] $end
+$var wire 4 ' consumer_read_ready [3:0] $end
+$var wire 32 ( consumer_read_data [31:0] $end
+$var parameter 32 ) ADDR_BITS $end
+$var parameter 32 * DATA_BITS $end
+$var parameter 32 + NUM_CHANNELS $end
+$var parameter 32 , NUM_CONSUMERS $end
+$var reg 1 - clock $end
+$var reg 32 . consumer_read_address [31:0] $end
+$var reg 4 / consumer_read_valid [3:0] $end
+$var reg 32 0 consumer_write_address [31:0] $end
+$var reg 32 1 consumer_write_data [31:0] $end
+$var reg 4 2 consumer_write_valid [3:0] $end
+$var reg 8 3 mem_read_data [7:0] $end
+$var reg 1 4 mem_read_ready $end
+$var reg 1 5 mem_write_ready $end
+$var reg 1 6 reset $end
+$var integer 32 7 guard [31:0] $end
+$var integer 32 8 k [31:0] $end
+$var integer 32 9 rcnt [31:0] $end
+$var integer 32 : served [31:0] $end
+$var integer 32 ; tests_failed [31:0] $end
+$var integer 32 < tests_passed [31:0] $end
+$var integer 32 = wcnt [31:0] $end
+$scope module uut $end
+$var wire 1 - clock $end
+$var wire 32 > consumer_read_address [31:0] $end
+$var wire 4 ? consumer_read_valid [3:0] $end
+$var wire 32 @ consumer_write_address [31:0] $end
+$var wire 32 A consumer_write_data [31:0] $end
+$var wire 4 B consumer_write_valid [3:0] $end
+$var wire 8 C mem_read_data [7:0] $end
+$var wire 1 4 mem_read_ready $end
+$var wire 1 5 mem_write_ready $end
+$var wire 1 6 reset $end
+$var parameter 32 D ADDR_BITS $end
+$var parameter 32 E CONSUMER_IDX_BITS $end
+$var parameter 32 F DATA_BITS $end
+$var parameter 3 G IDLE $end
+$var parameter 32 H NUM_CHANNELS $end
+$var parameter 32 I NUM_CONSUMERS $end
+$var parameter 3 J READ_RELAYING $end
+$var parameter 3 K READ_WAITING $end
+$var parameter 3 L WRITE_RELAYING $end
+$var parameter 3 M WRITE_WAITING $end
+$var reg 4 N consumer_busy [3:0] $end
+$var reg 32 O consumer_read_data [31:0] $end
+$var reg 4 P consumer_read_ready [3:0] $end
+$var reg 4 Q consumer_write_ready [3:0] $end
+$var reg 1 R found $end
+$var reg 8 S mem_read_address [7:0] $end
+$var reg 1 $ mem_read_valid $end
+$var reg 8 T mem_write_address [7:0] $end
+$var reg 8 U mem_write_data [7:0] $end
+$var reg 1 ! mem_write_valid $end
+$var integer 32 V c [31:0] $end
+$var integer 32 W k [31:0] $end
+$upscope $end
+$scope task check_signal $end
+$var reg 256 X label [255:0] $end
+$var integer 32 Y actual [31:0] $end
+$var integer 32 Z expected [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b10 M
+b100 L
+b1 K
+b11 J
+b100 I
+b1 H
+b0 G
+b1000 F
+b10 E
+b1000 D
+b100 ,
+b1 +
+b1000 *
+b1000 )
+$end
+#0
+$dumpvars
+bx Z
+bx Y
+bx X
+bx W
+bx V
+bx U
+bx T
+bx S
+xR
+bx Q
+bx P
+bx O
+bx N
+bx C
+b0 B
+b0 A
+b0 @
+b0 ?
+b0 >
+b0 =
+b0 <
+b0 ;
+bx :
+b0 9
+b100 8
+bx 7
+16
+05
+04
+bx 3
+b0 2
+b0 1
+b0 0
+b0 /
+b0 .
+0-
+bx (
+bx '
+bx &
+bx %
+x$
+bx #
+bx "
+x!
+$end
+#5
+b0 "
+b0 U
+b0 #
+b0 T
+b0 %
+b0 S
+0!
+0$
+b0 (
+b0 O
+b0 &
+b0 Q
+b0 '
+b0 P
+b0 3
+b0 C
+b1 V
+b0 N
+1-
+#10
+0-
+#15
+b1 V
+1-
+#20
+0-
+06
+b11 <
+b1010010011001010111001101100101011101000011101000100000011011010110010101101101010111110111001001100101011000010110010001011111011101100110000101101100011010010110010000100000001111010010000000110000 X
+b0 Z
+b0 Y
+#25
+b100 W
+0R
+b1 V
+1-
+#30
+0-
+b0 7
+b1 /
+b1 ?
+b10000 .
+b10000 >
+#35
+b10000 %
+b10000 S
+1$
+b1 N
+1R
+b100 W
+b1 V
+1-
+#40
+0-
+b1 7
+#45
+b1 9
+b1 V
+1-
+#50
+0-
+b10 7
+#55
+b0 9
+b1000010 3
+b1000010 C
+14
+b1 V
+1-
+#60
+0-
+b11 7
+#65
+b1000010 (
+b1000010 O
+b1 '
+b1 P
+0$
+04
+b1 V
+1-
+#70
+0-
+b0 /
+b0 ?
+b100 <
+b110001101101111011011100111001101110101011011010110010101110010001000000011000000100000011100100110010101100001011001000010000001011011001100000111100000110001001100000101110100100000001111010010000000110000011110000011010000110010 X
+b1000010 Z
+b1000010 Y
+b100 7
+#75
+b0 '
+b0 P
+b0 N
+b1 V
+1-
+#80
+0-
+#85
+b100 W
+0R
+b1 V
+1-
+#90
+0-
+b0 7
+b0 :
+b1111 /
+b1111 ?
+b100011001000100010000100100000 .
+b100011001000100010000100100000 >
+b100 8
+#95
+b100000 %
+b100000 S
+1$
+b1 N
+1R
+b100 W
+b1 V
+1-
+#100
+0-
+b100 8
+b1 7
+#105
+b1 9
+b1 V
+1-
+#110
+0-
+b100 8
+b10 7
+#115
+b0 9
+b10100000 3
+b10100000 C
+14
+b1 V
+1-
+#120
+0-
+b100 8
+b11 7
+#125
+b10100000 (
+b10100000 O
+b1 '
+b1 P
+0$
+04
+b1 V
+1-
+#130
+0-
+b1 :
+b1110 /
+b1110 ?
+b100 8
+b100 7
+#135
+b0 '
+b0 P
+b0 N
+b1 V
+1-
+#140
+0-
+b100 8
+b101 7
+#145
+b100001 %
+b100001 S
+1$
+b10 N
+b100 W
+1R
+b1 V
+1-
+#150
+0-
+b100 8
+b110 7
+#155
+b1 9
+b1 V
+1-
+#160
+0-
+b100 8
+b111 7
+#165
+b0 9
+b10100001 3
+b10100001 C
+14
+b1 V
+1-
+#170
+0-
+b100 8
+b1000 7
+#175
+04
+b1010000110100000 (
+b1010000110100000 O
+b10 '
+b10 P
+0$
+b1 V
+1-
+#180
+0-
+b10 :
+b1100 /
+b1100 ?
+b100 8
+b1001 7
+#185
+b0 '
+b0 P
+b0 N
+b1 V
+1-
+#190
+0-
+b100 8
+b1010 7
+#195
+b100010 %
+b100010 S
+1$
+b100 N
+b100 W
+1R
+b1 V
+1-
+#200
+0-
+b100 8
+b1011 7
+#205
+b1 9
+b1 V
+1-
+#210
+0-
+b100 8
+b1100 7
+#215
+b0 9
+b10100010 3
+b10100010 C
+14
+b1 V
+1-
+#220
+0-
+b100 8
+b1101 7
+#225
+b101000101010000110100000 (
+b101000101010000110100000 O
+b100 '
+b100 P
+0$
+04
+b1 V
+1-
+#230
+0-
+b11 :
+b1000 /
+b1000 ?
+b100 8
+b1110 7
+#235
+b0 '
+b0 P
+b0 N
+b1 V
+1-
+#240
+0-
+b100 8
+b1111 7
+#245
+b100011 %
+b100011 S
+1$
+b1000 N
+b100 W
+1R
+b1 V
+1-
+#250
+0-
+b100 8
+b10000 7
+#255
+b1 9
+b1 V
+1-
+#260
+0-
+b100 8
+b10001 7
+#265
+b0 9
+b10100011 3
+b10100011 C
+14
+b1 V
+1-
+#270
+0-
+b100 8
+b10010 7
+#275
+04
+b10100011101000101010000110100000 (
+b10100011101000101010000110100000 O
+b1000 '
+b1000 P
+0$
+b1 V
+1-
+#280
+0-
+b100 :
+b0 /
+b0 ?
+b100 8
+b10011 7
+#285
+b0 '
+b0 P
+b0 N
+b1 V
+1-
+#290
+0-
+b1001 <
+b1100011011011110110111001110011011101010110110101100101011100100010000000110011001000000110011101101111011101000010000001011011001100000111100000110010001100110101110100100000001111010010000000110000011110000100000100110011 X
+b10100011 Z
+b10100011 Y
+b10100 7
+#295
+b100 W
+0R
+b1 V
+1-
+#300
+0-
+#305
+b100 W
+b1 V
+1-
+#310
+0-
+b0 7
+b10 2
+b10 B
+b111011100000000 1
+b111011100000000 A
+b11000000000000 0
+b11000000000000 @
+#315
+b1110111 "
+b1110111 U
+b110000 #
+b110000 T
+1!
+b10 N
+1R
+b100 W
+b1 V
+1-
+#320
+0-
+b1 7
+#325
+b1 =
+b1 V
+1-
+#330
+0-
+b10 7
+#335
+b0 =
+15
+b1 V
+1-
+#340
+0-
+b11 7
+#345
+b10 &
+b10 Q
+0!
+05
+b1 V
+1-
+#350
+0-
+b0 2
+b0 B
+b100 7
+#355
+b0 &
+b0 Q
+b0 N
+b1 V
+1-
+#360
+0-
+#365
+b100 W
+0R
+b1 V
+1-
+#370
+0-
+b1010 <
+b1100011011011110110111001110011011101010110110101100101011100100010000000110001001000000111011101110010011011110111010001100101001000000011000001111000001101110011011100100000001011010011111000100000010110110011000001111000001100110011000001011101 X
+b1110111 Z
+b1110111 Y
+#375
+b100 W
+b1 V
+1-
+#380
+0-
+#385
+b100 W
+b1 V
+1-
+#390
+0-
